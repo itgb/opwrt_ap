@@ -30,8 +30,25 @@ EOF
 	exit ${1:-1}
 }
 
+kenv_init() {
+	if [ ! -e $BORAD_ENVDIR ];then
+		mkdir -p $BORAD_ENVDIR
+		return
+	fi
+	
+	if [ -L $BORAD_ENVDIR ];then
+		rm $BORAD_ENVDIR
+		mkdir -p $BORAD_ENVDIR
+	fi
+	
+	if [ -d $BORAD_ENVDIR ];then
+		return
+	fi
+}
+
 
 kenv_set() {
+	kenv_init
 	local borad_name="$1"
 	echo "board_name:$borad_name"
 	
